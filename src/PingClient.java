@@ -24,13 +24,12 @@ public class PingClient {
 
             // create packet to send
             DatagramPacket sendPacket = new DatagramPacket(transferData, transferData.length, IPAddress, port);
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
             for(int attempts = 0; attempts <10; attempts ++){
                 long start = System.currentTimeMillis();
 
                 uplink.send(sendPacket);
-
-                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
                 uplink.setSoTimeout(1000);
 
@@ -43,7 +42,7 @@ public class PingClient {
                     System.out.println("Round trip time (RTT): " + rtt);
 
                     String incoming = new String(receivePacket.getData());
-                    System.out.println("From server: " + incoming);
+                    System.out.println("MSG From server: " + incoming);
 
                 } catch (SocketTimeoutException ex) {
                     System.out.println("Request timed out.");
